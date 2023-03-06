@@ -10,11 +10,24 @@ export async function getAllRecordings() {
   return rows;
 }
 
+export async function getAllSensors() {
+  const [rows] = await pool.query("SELECT * FROM Sensors");
+  return rows;
+}
+
 export async function getRecordingsFromSensor(id) {
-  const [rows] = await pool.query(
-    "SELECT * FROM Recordings WHERE idSensor = ?",
-    [id]
-  );
+  let rows;
+  if (isNaN(Number(id))) {
+    [rows] = await pool.query(
+      "SELECT * FROM Recordings INNER JOIN Sensors ON Recordings.idSensor=Sensors.id WHERE label LIKE ?",
+      [`%${id}%`]
+    );
+  } else {
+    [rows] = await pool.query("SELECT * FROM Recordings WHERE idSensor = ?", [
+      id,
+    ]);
+  }
+  console.log(rows);
   return rows;
 }
 
@@ -23,11 +36,16 @@ const recordingsFromSensor = await getRecordingsFromSensor(2);
 console.log(recordingsFromSensor);
 
 export async function createRecording(hygrometry, temperature, macAddress) {
-  const timeStamp = Date.now();
+  let idSensor = 0;
+  const now = new Date();
+  // Conversion du format JS au format SQL qui suit la norme 8601
+  const timeStamp = now.toISOString().slice(0, 19).replace("T", " ");
   const user = await checkUserExistence(macAddress);
+  console.log(user);
   if (user === false) {
     const newUser = await createUser(macAddress, timeStamp);
-    const idSensor = newUser.insertId;
+    console.log(newUser);
+    idSensor = newUser[0].insertId;
   } else {
     idSensor = user;
   }
@@ -35,6 +53,7 @@ export async function createRecording(hygrometry, temperature, macAddress) {
     "INSERT INTO Recordings (timeStamp, idSensor, hygrometry, temperature) VALUES (?,?,?,?)",
     [timeStamp, idSensor, hygrometry, temperature]
   );
+  await pool.query("UPDATE Sensors SET lastConnected = ?", [timeStamp]);
   return result;
 }
 
@@ -51,5 +70,10 @@ export async function checkUserExistence(macAddress) {
     "SELECT * FROM Sensors WHERE macAddress = ?",
     [macAddress]
   );
-  return result.length === 0 ? false : result[0].insertId;
+  // console.log(result[0].id);
+  if (result.length === 0) {
+    return false;
+  } else {
+    return result[0].id;
+  }
 }

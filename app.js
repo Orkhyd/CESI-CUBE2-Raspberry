@@ -5,6 +5,7 @@ import {
   createRecording,
   createUser,
   getRecordingsFromSensor,
+  getAllSensors,
 } from "./database.js";
 
 const app = express();
@@ -15,6 +16,11 @@ app.get("/recordings", async (req, res) => {
   res.send(recordings);
 });
 
+app.get("/sensors", async (req, res) => {
+  const sensors = await getAllSensors();
+  res.send(sensors);
+});
+
 app.get("/recordings/:id", async (req, res) => {
   const id = req.params.id;
   const recordings = await getRecordingsFromSensor(id);
@@ -23,6 +29,7 @@ app.get("/recordings/:id", async (req, res) => {
 
 app.post("/recordings", async (req, res) => {
   const { macAddress, hygrometry, temperature } = req.body;
+  // console.log(req.body);
   const recording = await createRecording(hygrometry, temperature, macAddress);
   res.send(recording);
 });
