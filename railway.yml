@@ -1,0 +1,7 @@
+name: my-express-app
+env: node
+build:
+  frontend: npm install
+  backend: npm install --production
+start:
+  web: npm start
