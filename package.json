@@ -1,0 +1,24 @@
+{
+  "name": "railway_modules",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^16.0.3",
+    "express": "^5.0.0-beta.1",
+    "mysql2": "^3.2.0",
+    "qs": "^6.11.0",
+    "random-word-slugs": "^0.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
