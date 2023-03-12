@@ -15,7 +15,6 @@ app.use(express.json());
 
 app.get("/recordings", async (req, res) => {
   const recordings = await getAllRecordings();
-  res.useChunkedEncodingByDefault = false;
   res.send(recordings);
 });
 
