@@ -15,7 +15,8 @@ app.use(express.json());
 
 app.get("/recordings", async (req, res) => {
   const recordings = await getAllRecordings();
-  res.set("transfer-encoding", "").send(recordings);
+  res.useChunkedEncodingByDefault = false;
+  res.send(recordings);
 });
 
 app.get("/sensors", async (req, res) => {
