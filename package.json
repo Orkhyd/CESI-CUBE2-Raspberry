@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon app.js",
-    "start": "node app.js"
+    "start": "conc \"npm run start-backend\" \"npm run start-frontend\"",
+    "start-backend": "node app.js",
+    "start-frontend": "cd ./front-end && npm run start"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
     "random-word-slugs": "^0.1.6"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "nodemon": "^2.0.21"
   }
 }
