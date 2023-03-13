@@ -10,6 +10,11 @@ export async function getAllRecordings() {
   return rows;
 }
 
+export async function getLastRecording() {
+  const [rows] = await pool.query("SELECT * FROM Recordings ORDER BY id DESC LIMIT 1");
+  return rows;
+}
+
 export async function getAllSensors() {
   const [rows] = await pool.query("SELECT * FROM Sensors");
   return rows;
@@ -27,13 +32,13 @@ export async function getRecordingsFromSensor(id) {
       id,
     ]);
   }
-  console.log(rows);
+  // console.log(rows);
   return rows;
 }
 
 const allRecordings = await getAllRecordings();
 const recordingsFromSensor = await getRecordingsFromSensor(2);
-console.log(recordingsFromSensor);
+// console.log(recordingsFromSensor);
 
 export async function createRecording(hygrometry, temperature, macAddress) {
   let idSensor = 0;

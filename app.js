@@ -9,14 +9,20 @@ import {
   createUser,
   getRecordingsFromSensor,
   getAllSensors,
+  getLastRecording
 } from "./database.js";
-
+console.log(await getLastRecording());
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 app.get("/recordings", async (req, res) => {
   const recordings = await getAllRecordings();
+  res.send(recordings);
+});
+
+app.get("/recordings/last", async (req, res) => {
+  const recordings = await getLastRecording();
   res.send(recordings);
 });
 
