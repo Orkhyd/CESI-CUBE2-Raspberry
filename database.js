@@ -35,7 +35,6 @@ export async function getRecordingsFromSensor(id) {
   // console.log(rows);
   return rows;
 }
-
 const allRecordings = await getAllRecordings();
 const recordingsFromSensor = await getRecordingsFromSensor(2);
 // console.log(recordingsFromSensor);
@@ -46,10 +45,10 @@ export async function createRecording(hygrometry, temperature, macAddress) {
   // Conversion du format JS au format SQL qui suit la norme 8601
   const timeStamp = now.toISOString().slice(0, 19).replace("T", " ");
   const user = await checkUserExistence(macAddress);
-  console.log(user);
+  // console.log(user);
   if (user === false) {
     const newUser = await createUser(macAddress, timeStamp);
-    console.log(newUser);
+    // console.log(newUser);
     idSensor = newUser[0].insertId;
   } else {
     idSensor = user;

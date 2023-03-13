@@ -9,7 +9,7 @@ import {
   createUser,
   getRecordingsFromSensor,
   getAllSensors,
-  getLastRecording
+  getLastRecording,
 } from "./database.js";
 console.log(await getLastRecording());
 const app = express();
@@ -22,8 +22,9 @@ app.get("/recordings", async (req, res) => {
 });
 
 app.get("/recordings/last", async (req, res) => {
-  const recordings = await getLastRecording();
-  res.send(recordings);
+  const recording = await getLastRecording();
+  res.send(recording);
+  console.log(recording);
 });
 
 app.get("/sensors", async (req, res) => {
