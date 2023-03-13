@@ -1,0 +1,33 @@
+<!-- IMG connect with Title -->
+<div class="connexion">
+    <img id="changeImgRed" src="assets/img/rouge.png">
+    <img id="changeImgGreen" style="display: none;" src="assets/img/vert.png">
+    <h1>Relevé Raspberry</h1>
+</div>
+
+<!-- Encadrement + Data -->
+<div class="ensembleElementPage">
+    {{ heure }}
+    <!-- DATA ENCADRER -->
+    <div class="block1">
+        <label>Degré : </label>{{ degre ? degre + "°" : "" }}<br />
+        <label>Pression : </label>{{ pression ? pression + "hPa" : "" }}<br />
+        <label>Humidité : </label>{{ humidite ? humidite + "%" : "" }}<br />
+        <label>Dernière actualisation : </label>{{ derniereActu }}<br />
+    </div>
+
+    <!-- Les Apps Graphique -->
+    <div class="lesAppGraphique">
+        <div> <!-- Thermomètre -->
+        </div>
+        <div> <!-- Pression -->
+        </div>
+        <div> <!-- Humidité -->
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer id="changeColor">
+    <span>Relevé du Raspberry Pi Pico W | Cube 2 - Groupe 2 (Nicolas, Marius et Pierre)</span>
+</footer>
