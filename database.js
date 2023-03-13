@@ -39,7 +39,7 @@ const allRecordings = await getAllRecordings();
 const recordingsFromSensor = await getRecordingsFromSensor(2);
 // console.log(recordingsFromSensor);
 
-export async function createRecording(hygrometry, temperature, macAddress) {
+export async function createRecording(hygrometry, temperature, macAddress, pressure) {
   let idSensor = 0;
   const now = new Date();
   // Conversion du format JS au format SQL qui suit la norme 8601
@@ -54,7 +54,7 @@ export async function createRecording(hygrometry, temperature, macAddress) {
     idSensor = user;
   }
   const result = await pool.query(
-    "INSERT INTO Recordings (timeStamp, idSensor, hygrometry, temperature) VALUES (?,?,?,?)",
+    "INSERT INTO Recordings (timeStamp, idSensor, hygrometry, temperature, pressure) VALUES (?,?,?,?)",
     [timeStamp, idSensor, hygrometry, temperature]
   );
   await pool.query("UPDATE Sensors SET lastConnected = ?", [timeStamp]);
