@@ -15,6 +15,8 @@ console.log(await getLastRecording());
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/", express.static("./front-end/dist/testfile"));
+
 
 app.get("/recordings", async (req, res) => {
   const recordings = await getAllRecordings();
