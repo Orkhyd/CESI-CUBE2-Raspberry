@@ -11,7 +11,7 @@ import {
   getAllSensors,
   getLastRecording,
 } from "./database.js";
-console.log(await getLastRecording());
+// console.log(await getLastRecording());
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -42,7 +42,7 @@ app.get("/recordings/:id", async (req, res) => {
 
 app.post("/recordings", async (req, res) => {
   const { macAddress, hygrometry, temperature, pressure } = req.body;
-  // console.log(req.body);
+  console.log(req.body);
   const recording = await createRecording(hygrometry, temperature, macAddress, pressure);
   res.send(recording);
 });
