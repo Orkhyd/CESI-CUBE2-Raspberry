@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import coap, { Server } from "coap";
+
+
 dotenv.config();
 import {
   getAllRecordings,
@@ -13,6 +16,19 @@ import {
 } from "./database.js";
 // console.log(await getLastRecording());
 const app = express();
+const coapServer = coap.createServer();
+
+
+coapServer.on('request', (req, res) => {
+  console.log(req);
+  res.end('Hello, CoAP!');
+});
+
+coapServer.listen(() => {
+  console.log('CoAP server started');
+});
+
+
 app.use(express.json());
 app.use(cors());
 app.use("/", express.static("./front-end/dist/testfile"));
