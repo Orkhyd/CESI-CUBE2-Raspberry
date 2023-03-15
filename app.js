@@ -2,7 +2,6 @@ import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import coap, { Server } from "coap";
-import spdy from "spdy"
 
 
 dotenv.config();
@@ -59,16 +58,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const server = spdy.createServer(
-  {
-    spdy: {
-      protocols: ['http/1.0', 'http/1.1'],
-    },
-  },
-  app
-);
 
-
-server.listen(process.env.PORT, "0.0.0.0", () => {
+app.listen(process.env.PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
