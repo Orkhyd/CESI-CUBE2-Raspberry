@@ -19,10 +19,8 @@ import {
 // console.log(await getLastRecording());
 
 const app = express();
+
 app.use(express.json());
-
-
-
 app.use(cors());
 app.use("/", express.static("./front-end/dist/testfile"));
 
@@ -71,6 +69,6 @@ const server = spdy.createServer(
 );
 
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
