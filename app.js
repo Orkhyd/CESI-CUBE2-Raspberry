@@ -1,10 +1,12 @@
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import coap, { Server } from "coap";
+import spdy from "spdy"
 
 
 dotenv.config();
+
 import {
   getAllRecordings,
   checkUserExistence,
@@ -15,21 +17,12 @@ import {
   getLastRecording,
 } from "./database.js";
 // console.log(await getLastRecording());
-const app = express();
-const coapServer = coap.createServer();
-
-
-coapServer.on('request', (req, res) => {
-  console.log(req);
-  res.end('Hello, CoAP!');
-});
-
-coapServer.listen(() => {
-  console.log('CoAP server started');
-});
 
 
 app.use(express.json());
+
+
+
 app.use(cors());
 app.use("/", express.static("./front-end/dist/testfile"));
 
@@ -67,6 +60,16 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
+
+const server = spdy.createServer(
+  {
+    spdy: {
+      protocols: ['http/1.0', 'http/1.1'],
+    },
+  },
+  app
+);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
