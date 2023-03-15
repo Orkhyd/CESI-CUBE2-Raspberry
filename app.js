@@ -18,7 +18,7 @@ import {
 } from "./database.js";
 // console.log(await getLastRecording());
 
-
+const app = express();
 app.use(express.json());
 
 
