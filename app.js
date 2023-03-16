@@ -1,21 +1,16 @@
 import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import coap, { Server } from "coap";
-
 
 dotenv.config();
 
 import {
   getAllRecordings,
-  checkUserExistence,
   createRecording,
-  createUser,
   getRecordingsFromSensor,
   getAllSensors,
   getLastRecording,
 } from "./database.js";
-// console.log(await getLastRecording());
 
 const app = express();
 
@@ -47,10 +42,6 @@ app.get("/recordings/:id", async (req, res) => {
 });
 
 app.post("/recordings", async (req, res) => {
-  // console.log(JSON.parse(req.content));
-  // console.log(JSON.parse(req.text));
-  // console.log(JSON.stringify(req.content));
-  // console.log(JSON.stringify(req.text));
   console.log(req.payload)
   console.log(req.data)
   console.log(req.dataload)
@@ -66,6 +57,6 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(process.env.PORT, "0.0.0.0", () => {
+app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { generateSlug } from "random-word-slugs";
 
 dotenv.config();
+
 const pool = mysql.createPool(process.env.MYSQL_CONNECTION_URL).promise();
 
 export async function getAllRecordings() {
@@ -32,12 +33,8 @@ export async function getRecordingsFromSensor(id) {
       id,
     ]);
   }
-  // console.log(rows);
   return rows;
 }
-const allRecordings = await getAllRecordings();
-const recordingsFromSensor = await getRecordingsFromSensor(2);
-// console.log(recordingsFromSensor);
 
 export async function createRecording(hygrometry, temperature, macAddress, pressure) {
   let idSensor = 0;
@@ -45,10 +42,8 @@ export async function createRecording(hygrometry, temperature, macAddress, press
   // Conversion du format JS au format SQL qui suit la norme 8601
   const timeStamp = now.toISOString().slice(0, 19).replace("T", " ");
   const user = await checkUserExistence(macAddress);
-  // console.log(user);
   if (user === false) {
     const newUser = await createUser(macAddress, timeStamp);
-    // console.log(newUser);
     idSensor = newUser[0].insertId;
   } else {
     idSensor = user;
@@ -74,7 +69,6 @@ export async function checkUserExistence(macAddress) {
     "SELECT * FROM Sensors WHERE macAddress = ?",
     [macAddress]
   );
-  // console.log(result[0].id);
   if (result.length === 0) {
     return false;
   } else {
