@@ -7,6 +7,7 @@ Projet CESI de Pierre, Nicolas et Marius consistant à récupérer des informati
 - [x] Déploiement du front-end angular à travers une route Express => https://sonde.up.railway.app/
 - [x] Déploiement secondaire sur le serveur accessible en SSH
 - [x] Résolution du problème de urequests qui ne fonctionne qu'en HTTP/1.0 ( soit réceptionner les requêtes 1.0 depuis le serveur Node, soit passer par un autre package et/où protocole, par exemple CoAP )
+- [ ] Passage à HTTPS
 - [ ] Création d'un système d'authentification permettant de laisser exclusivement à la Raspberry avec la bonne clé d'accéder à l'API
 - [ ] Front Responsive
 - [ ] Implémentation de graphiques de données
