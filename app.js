@@ -47,8 +47,15 @@ app.get("/recordings/:id", async (req, res) => {
 });
 
 app.post("/recordings", async (req, res) => {
-  const { macAddress, hygrometry, temperature, pressure } = req.body;
+  // console.log(JSON.parse(req.content));
+  // console.log(JSON.parse(req.text));
+  // console.log(JSON.stringify(req.content));
+  // console.log(JSON.stringify(req.text));
+  console.log(req.payload)
+  console.log(req.data)
+  console.log(req.dataload)
   console.log(req.body);
+  const { macAddress, hygrometry, temperature, pressure } = req.body;
   const recording = await createRecording(hygrometry, temperature, macAddress, pressure);
   res.send(recording);
 });

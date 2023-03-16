@@ -54,8 +54,8 @@ export async function createRecording(hygrometry, temperature, macAddress, press
     idSensor = user;
   }
   const result = await pool.query(
-    "INSERT INTO Recordings (timeStamp, idSensor, hygrometry, temperature, pressure) VALUES (?,?,?,?)",
-    [timeStamp, idSensor, hygrometry, temperature]
+    "INSERT INTO Recordings (timeStamp, idSensor, hygrometry, temperature, pressure) VALUES (?,?,?,?,?)",
+    [timeStamp, idSensor, hygrometry, temperature, pressure]
   );
   await pool.query("UPDATE Sensors SET lastConnected = ?", [timeStamp]);
   return result;
