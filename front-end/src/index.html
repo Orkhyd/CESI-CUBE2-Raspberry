@@ -1,13 +1,44 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Groupe 2 | Relevé Raspberry</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Groupe 2 | Relevé Raspberry</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <app-root></app-root>
+    <!-- Footer -->
+    <div class="monImg">
+      <img src="assets/img/arcenciel1.png">
+      <footer id="changeColor">
+          <span>Relevé du Raspberry Pi Pico W | Cube 2 - Groupe 2 (<span title="L'autre">Nicolas</span>, <span title="A.k.a cheveux soyeux et brillants comme la soie">Marius</span> et <span title="A.k.a le meilleur">Pierre</span>)</span>
+      </footer>
+    </div>
+  </body>
 </html>
+
+<style>
+  .monImg > img {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: auto;
+    max-height: 250px;
+    width: 70vw;
+    max-width: 650px;
+    z-index: -1;
+  }
+
+  @media all and (max-aspect-ratio: 13/9) {
+    .monImg > img {
+      height: auto;
+      max-height: 250px;
+      width: 90%;
+      max-width: 500px;
+    }
+  }
+
+</style>

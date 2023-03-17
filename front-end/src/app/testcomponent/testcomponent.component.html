@@ -1,8 +1,8 @@
 <!-- IMG connect with Title -->
+<img class="finito" src="assets/img/finito.png">
 <div class="connexion">
-    <img id="changeImgRed" src="assets/img/rouge.png">
-    <img id="changeImgGreen" style="display: none;" src="assets/img/vert.png">
-    <h1>Relevé Raspberry</h1>
+    <div style="background: red;" id="divConnect"></div>
+    <h1><u><b>Relevé Raspberry</b></u></h1>
 </div>
 
 <!-- Encadrement + Data -->
@@ -10,24 +10,31 @@
     {{ heure }}
     <!-- DATA ENCADRER -->
     <div class="block1">
-        <label>Degré : </label>{{ degre ? degre + "°" : "" }}<br />
-        <label>Pression : </label>{{ pression ? pression + "hPa" : "" }}<br />
-        <label>Humidité : </label>{{ humidite ? humidite + "%" : "" }}<br />
-        <label>Dernière actualisation : </label>{{ derniereActu }}<br />
+        <label>Degré : </label><span class="value">{{ degre ? degre + "°" : "" }}</span><br />
+        <label>Pression : </label><span class="value">{{ pression ? pression + "hPa" : "" }}</span><br />
+        <label>Humidité : </label><span class="value">{{ humidite ? humidite + "%" : "" }}</span><br />
+        <label>Dernière actualisation : </label><span class="value">{{ derniereActu }}</span><br />
     </div>
-
-    <!-- Les Apps Graphique -->
-    <div class="lesAppGraphique">
-        <div> <!-- Thermomètre -->
-        </div>
-        <div> <!-- Pression -->
-        </div>
-        <div> <!-- Humidité -->
-        </div>
+    <br><hr width="90%"><br>
+    <div class="block2">
+        <label>Graphique des températures</label>
+        <canvas width="50%" id="barCanvas" aria-label="chart" role="img"></canvas>
     </div>
 </div>
 
-<!-- Footer -->
-<footer id="changeColor">
-    <span>Relevé du Raspberry Pi Pico W | Cube 2 - Groupe 2 (Nicolas, Marius et Pierre)</span>
-</footer>
+<br><br><br><br>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
+<script>
+    const barCanvas = document.getElementById("barCanvas");
+    const barChart = new Chart(barCanvas, {
+        type: "bar",
+        data: {
+            labels: ['Beinjing', 'Tokyo', 'Seoul', 'Hong kong'],
+            datasets: [{
+                data: [240, 120, 134, 123],
+                backgroundColor: ['grey', 'red', 'blue', 'purple']
+            }]
+        }
+    })
+</script>

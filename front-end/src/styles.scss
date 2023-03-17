@@ -1,7 +1,17 @@
 * {
-	font-family: "Consolas", sans-serif;
-    padding: 0;
+	@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+	font-family: 'Inconsolata', monospace;
+	padding: 0;
 	margin: 0;
+}
+
+.finito {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: -1;
+	width: 30%;
+	max-width: 200px;
 }
 
 .connexion {
@@ -11,7 +21,9 @@
 	justify-content: center;
 }
 
-img {
+.connexion > div {
+	border: 1.5px solid black;
+	border-radius: 100%;
 	width: 35px;
 	height: 35px;
 	margin-right: 15px;
@@ -28,11 +40,39 @@ h1 {
 }
 
 .block1 {
-	border: 2px solid black;
+	background-color: white;
 	border-radius: 10px;
 	margin: 20px;
 	padding: 20px;
 	width: 40%;
+	position: relative;
+}
+
+.block2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	padding-right: 8%;
+}
+
+.block1:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -10px;
+	height: 100%;
+	width: 100%;
+	border: 3px solid black;
+	transform: skew(-10deg); /* pencher le bord vers la droite */
+	border-radius: 10px; /* conserver les coins arrondis */
+	box-sizing: border-box; /* inclure la bordure dans les dimensions de l'élément */
+}
+
+.value {
+	font-weight: bold;
+	font-style: italic;
 }
 
 footer {
@@ -45,8 +85,33 @@ footer {
    	background-color: red;
 }
 
-/*
-	00ff00 = vert
-	00A4FF = bleu ciel
-	ff0000 = red (red)
-*/
+.appGraph {
+	width: 75%;
+}
+
+@media all and (max-aspect-ratio: 13/9) {
+	.connexion > img {
+		width: 45px;
+		height: 45px;
+	}
+
+	.block1 {
+		border-radius: 15px;
+		width: 75%;
+	}
+
+	.block2 {
+		width: 90%;
+		padding-right: 10%;
+	}
+
+	.block1:before {
+		content: "";
+		left: 0px;
+		transform: skew(0deg); /* pencher le bord vers la droite */
+	}
+
+	.appGraph {
+		width: 90%;
+	}
+}

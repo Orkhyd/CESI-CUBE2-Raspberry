@@ -1,7 +1,6 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { empty } from 'rxjs';
+import Chart from 'chart.js/auto';
 
 // Affectation des variables
 let connectRasp = false;
@@ -27,6 +26,7 @@ export class TestcomponentComponent implements OnInit {
   pression?: number;
   humidite?: number;
   derniereActu?: string;
+  derniereActuFinal?: string;
   response?: JSON;
   renderer: Renderer2;
 
@@ -39,16 +39,15 @@ export class TestcomponentComponent implements OnInit {
 
     setInterval(async () => {
       try {
-        const response = await this.http.get<any>("https://sonde.up.railway.app/recordings/last", { observe: 'response' }).toPromise();
+        const response = await this.http.get<any>("http://140.238.217.125:3000/recordings/last", { observe: 'response' }).toPromise();
         if (response?.status === 200) {
           try {
-            //recuperer les data ici
-            const jsonData = response.body[0];
-            this.degre = jsonData.temperature;
-            this.pression =  jsonData.pressure;
-            this.humidite = jsonData.hygrometry;
-            this.derniereActu = jsonData.timeStamp;
-            connectRasp = true;
+            //Recupère Data en JSON
+            if (this.derniereActu === this.derniereActuFinal) {
+              connectRasp = false;
+            } else {
+              connectRasp = true;
+            }
             this.changeValue();
           } catch (error) {
             console.log("Impossible de récupérer les données. Error: " + error);
@@ -65,28 +64,123 @@ export class TestcomponentComponent implements OnInit {
         connectRasp = false;
         this.changeValue();
       }
-    }, 6000); //Essaye de se connecter pour récupérer les données toutes les 6s (10x par minute)
-  }   
+    }, 12000); //Essaye de se connecter pour récupérer les données toutes les 12s
+  }
+
+  ngAfterViewInit() {
+    const canvas = document.getElementById('barCanvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['15/03/2023 à 08:11:01', '15/03/2023 à 08:11:13', '15/03/2023 à 08:11:25', '15/03/2023 à 08:11:37', '15/03/2023 à 08:11:49', '15/03/2023 à 08:12:01', '15/03/2023 à 08:12:13', '15/03/2023 à 08:12:25', '15/03/2023 à 08:12:37', '15/03/2023 à 08:12:49'],
+          datasets: [{
+            label: 'Temperature',
+            data: [18.44, 18.52, 18.55, 19.05, 18.97, 18.72, 18.60, 18.72, 18.74, 18.85],
+            backgroundColor: ['grey', 'red', 'blue', 'grey', 'red', 'blue', 'grey', 'red', 'blue', 'purple']
+          }],
+        },
+      });
+    } else {
+      console.error('Could not get canvas context.');
+    }
+  };
 
   changeValue() {
     const passageVert = document.getElementById('changeColor')!;
-    const changeImgRed = this.renderer.selectRootElement('#changeImgRed');
-    const changeImgGreen = this.renderer.selectRootElement('#changeImgGreen');
+    const divConnect = document.getElementById('divConnect')!;
 
     if (connectRasp) {
         // Le code à exécuter si connectRasp est vrai
-        passageVert.style.backgroundColor = '#00ff00';
-        changeImgRed.style.display = "none";
-        changeImgGreen.style.display = "block";
+        passageVert.style.background = '#00ff00';
+        passageVert.style.transition = 'background 2s ease-in-out';
+        divConnect.style.background = '#00ff00';
+        divConnect.style.transition = 'background 2s ease-in-out';
     } else {
         // Le code à exécuter si connectRasp est faux
-        passageVert.style.backgroundColor = '#ff0000';
-        changeImgRed.style.display = "block";
-        changeImgGreen.style.display = "none";
-        this.degre = undefined;
-        this.pression = undefined;
-        this.humidite = undefined;
-        this.derniereActu = "";
+        passageVert.style.background = '#ff0000';
+        passageVert.style.transition = 'background 2s ease-in-out';
+        divConnect.style.background = '#ff0000';
+        divConnect.style.transition = 'background 2s ease-in-out';
     }
   }
 }
+/* 00ff00 = vert; 00A4FF = bleu ciel; ff0000 = red (red)
+
+//DICI
+    const canvas = document.getElementById('myChart') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+    
+    const options: ChartConfiguration['options'] = {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Temps (en heure)"
+          },
+          type: "timeseries",
+          position: "bottom",
+          time: {
+            parser: "YYYY-MM-DD HH:mm:ss",
+            tooltipFormat: "ll HH:mm:ss"
+          },
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 10,
+            source: "auto"
+          },
+          adapters: {
+            date: {
+              locale: "fr"
+            }
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Température (en degrés)"
+          },
+          type: "linear",
+          position: "left"
+        }
+      }
+    };
+  }
+
+let temperature = 20; // initial temperature value
+    let lastUpdate = 0; // initial last update value
+    let chartData: any[] = []; // Initialize an empty array for chart data
+    
+    if (ctx) {
+      this.myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Relevé température',
+              data: (() => chartData)(),
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: options,
+      });
+    } else {
+      console.error('Failed to get canvas context');
+    } 
+
+    const updateChart = () => {
+      if (this.degre !== undefined && this.derniereActuFinal !== undefined) {
+        chartData.push({ x: new Date(this.derniereActuFinal), y: this.degre });
+        this.myChart.data.datasets[0].data = (() => chartData)();
+        this.myChart.update();
+      }
+    }
+    setInterval(updateChart, 1000); // Update the chart every 1 second (to match the API call interval)   
+  }   
+
+*/
