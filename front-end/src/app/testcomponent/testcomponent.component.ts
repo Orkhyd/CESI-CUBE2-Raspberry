@@ -43,6 +43,13 @@ export class TestcomponentComponent implements OnInit {
         if (response?.status === 200) {
           try {
             //Recupère Data en JSON
+            const jsonData = response.body[0];
+            this.degre = jsonData.temperature;
+            this.pression =  jsonData.pressure;
+            this.humidite = jsonData.hygrometry;
+            this.derniereActu = jsonData.timeStamp;
+            connectRasp = true;
+            this.changeValue();
             if (this.derniereActu === this.derniereActuFinal) {
               connectRasp = false;
             } else {
@@ -87,7 +94,6 @@ export class TestcomponentComponent implements OnInit {
       console.error('Could not get canvas context.');
     }
   };
-
   changeValue() {
     const passageVert = document.getElementById('changeColor')!;
     const divConnect = document.getElementById('divConnect')!;
