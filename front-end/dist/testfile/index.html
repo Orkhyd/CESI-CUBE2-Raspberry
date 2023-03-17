@@ -1,12 +1,43 @@
 <!DOCTYPE html><html lang="en"><head>
-  <meta charset="utf-8">
-  <title>Groupe 2 | Relevé Raspberry</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<style>*{font-family:Consolas,sans-serif;padding:0;margin:0}</style><link rel="stylesheet" href="styles.4b14bd83e3543b34.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.4b14bd83e3543b34.css"></noscript></head>
-<body>
-  <app-root></app-root>
-<script src="runtime.b88846883e4770a9.js" type="module"></script><script src="polyfills.4bc82c09bda94a04.js" type="module"></script><script src="main.97b4e1ec81083f1c.js" type="module"></script>
+    <meta charset="utf-8">
+    <title>Groupe 2 | Relevé Raspberry</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>@charset "UTF-8";*{@import url(https://fonts.googleapis.com/css2?family=Inconsolata&display=swap);font-family:Inconsolata,monospace;padding:0;margin:0}footer{position:fixed;bottom:0;width:100%;padding:5px;text-align:center;border-top:1px solid black;background-color:red}</style><link rel="stylesheet" href="styles.864d820831a4ef31.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.864d820831a4ef31.css"></noscript></head>
+  <body>
+    <app-root></app-root>
+    <!-- Footer -->
+    <div class="monImg">
+      <img src="assets/img/arcenciel1.png">
+      <footer id="changeColor">
+          <span>Relevé du Raspberry Pi Pico W | Cube 2 - Groupe 2 (<span title="L'autre">Nicolas</span>, <span title="A.k.a cheveux soyeux et brillants comme la soie">Marius</span> et <span title="A.k.a le meilleur">Pierre</span>)</span>
+      </footer>
+    </div>
+  <script src="runtime.96136f95f1bf4e49.js" type="module"></script><script src="polyfills.dd803fab92601465.js" type="module"></script><script src="scripts.fe2d35d757efeda6.js" defer></script><script src="main.eb762715aae068ce.js" type="module"></script>
 
+
+<style>
+  .monImg > img {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: auto;
+    max-height: 250px;
+    width: 70vw;
+    max-width: 650px;
+    z-index: -1;
+  }
+
+  @media all and (max-aspect-ratio: 13/9) {
+    .monImg > img {
+      height: auto;
+      max-height: 250px;
+      width: 90%;
+      max-width: 500px;
+    }
+  }
+
+</style>
 </body></html>
